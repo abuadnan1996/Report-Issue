@@ -30,7 +30,7 @@ h4 {
 
 /* Table container to handle scrolling */
 .table-container {
-    max-height: 800px; /* Set your desired height */
+    max-height: 600px; /* Set your desired height */
     overflow-y: auto;  /* Enable vertical scrolling */
     border: 1px solid #ddd; /* Optional: Adds a border around the table */
 }
@@ -60,7 +60,7 @@ thead th {
 }
 
 /* Table row hover effect */
-tr:hover {
+tbody tr:hover {
     background-color: #f1f1f1;
 }
 
