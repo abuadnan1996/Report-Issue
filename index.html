@@ -9,7 +9,9 @@
 <body>
     <div class="container">
         <h1>Plant Reports</h1>
-        <table id="reportTable">
+        <h4>Instrument and Control Department</h4>
+        <div class="table-container">
+            <table id="reportTable">
             <thead>
                 <tr>
                     <th>Plant Name</th>
@@ -25,6 +27,8 @@
                 <!-- Specific data will be populated here -->
             </tbody>
         </table>
+        </div>
+        
     </div>
 
     <script>
@@ -62,7 +66,7 @@
             .catch(error => console.error('Error fetching the Google Sheet data:', error));
     </script>
     <footer>
-  <p>Author: Abu Adnan, Engineer, Instrument and Control</p>
+  <p>Developer: Abu Adnan, Engineer, Instrument and Control</p>
   <p><a href="mailto:abuadnan1996@gmail.com">abuadnan1996@gmail.com</a></p>
 </footer>
 </body>
