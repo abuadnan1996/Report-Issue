@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Table Display</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Plant Reports</h1>
+        <table id="reportTable">
+            <thead>
+                <tr>
+                    <th>Report by</th>
+                    <th>Shift</th>
+                    <th>Priority</th>
+                    <th>Tag</th>
+                    <th>Report</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Specific data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Replace 'YOUR_SHEET_ID' with your actual Google Sheet ID
+        const sheetID = 'YOUR_SHEET_ID';  // E.g., '1A2B3C4D5E6F7G8H9I0J'
+        const gid = '0'; // Change this if your data is on another sheet (find gid in URL)
+        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&gid=${gid}`;
+
+        // Fetch data from Google Sheets
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                // Parse the JSON response
+                const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
+                const rows = json.table.rows;
+
+                // Get the table body element
+                const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+
+                // Clear any existing rows
+                tableBody.innerHTML = '';
+
+                // Iterate over each row of data
+                rows.forEach(row => {
+                    // Create a new row for each set of data
+                    const newRow = tableBody.insertRow();
+                    
+                    // Fetch cells from B to G (indices 1 to 6)
+                    for (let i = 1; i <= 6; i++) { // Indices 1 to 6 correspond to columns B to G
+                        const newCell = newRow.insertCell(); // Create a new cell
+                        newCell.textContent = row.c[i] ? row.c[i].v : ''; // Set cell content, handle empty cells
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching the Google Sheet data:', error));
+    </script>
+</body>
+</html>
