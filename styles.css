@@ -7,13 +7,6 @@ body {
 }
 
 /* Footer styling */
-footer {
-    clear: both;
-    position: relative;
-    height: 200px;
-    margin-bottom: -200px;
-    text-align: center;
-}
 
 /* Main container styling */
 .container {
@@ -51,6 +44,7 @@ table {
 
 /* Table header styling */
 th, td {
+    text-size =12;
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
@@ -83,4 +77,12 @@ td:last-child {
 /* Status column styling */
 td:nth-last-child(1) {
     color: red; /* Change the color for status */
+}
+
+footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-bottom: -200px;
+    text-align: center;
 }
