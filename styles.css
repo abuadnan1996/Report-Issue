@@ -1,15 +1,20 @@
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
 }
+
+/* Footer styling */
 footer {
     clear: both;
     position: relative;
     height: 200px;
     margin-top: -200px;
 }
+
+/* Main container styling */
 .container {
     max-width: 1000px;
     margin: auto;
@@ -19,41 +24,58 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Header styling */
 h1 {
     text-align: center;
     color: #333;
 }
 
+/* Table container to handle scrolling */
+.table-container {
+    max-height: 400px; /* Set your desired height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Adds a border around the table */
+}
+
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
+/* Table header styling */
 th, td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
 }
 
-th {
+/* Fixed header row */
+thead th {
+    position: sticky;
+    top: 0;
     background-color: #4CAF50;
     color: white;
+    z-index: 1;
 }
 
+/* Table row hover effect */
 tr:hover {
     background-color: #f1f1f1;
 }
 
-td {
+/* Table body styling */
+tbody td {
     background-color: #f9f9f9;
 }
 
+/* Last column styling */
 td:last-child {
     font-weight: bold;
 }
 
+/* Status column styling */
 td:nth-last-child(1) {
     color: red; /* Change the color for status */
 }
-
