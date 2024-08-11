@@ -30,7 +30,7 @@ h4 {
 
 /* Table container to handle scrolling */
 .table-container {
-    max-height: 600px; /* Set your desired height */
+    max-height: 400px; /* Set your desired height */
     overflow-y: auto;  /* Enable vertical scrolling */
     border: 1px solid #ddd; /* Optional: Adds a border around the table */
 }
