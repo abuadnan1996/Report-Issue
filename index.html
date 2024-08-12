@@ -42,39 +42,31 @@
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&gid=${gid}`;
 
         // Fetch data from Google Sheets
-       fetch(url)
-    .then(response => response.text())
-    .then(data => {
-        // Parse the JSON response
-        const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
-        const rows = json.table.rows;
+              fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                // Parse the JSON response
+                const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
+                const rows = json.table.rows;
 
-        // Get the table body element
-        const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+                // Get the table body element
+                const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
 
-        // Clear any existing rows
-        tableBody.innerHTML = '';
+                // Clear any existing rows
+                tableBody.innerHTML = '';
 
-        // Iterate over each row of data
-        rows.forEach(row => {
-            // Create a new row for each set of data
-            const newRow = tableBody.insertRow();
-            
-            // Fetch cells from B to G (indices 1 to 6)
-            for (let i = 0; i <= 7; i++) {
-                const newCell = newRow.insertCell(); // Create a new cell
-
-                let cellValue = row.c[i] ? row.c[i].v : ''; // Get cell content, handle empty cells
-
-                // Check if the cell contains a date and format it
-                if (cellValue && typeof cellValue === 'object' && cellValue.hasOwnProperty('f')) {
-                    cellValue = cellValue.f; // Use the formatted date string
-                }
-
-                newCell.textContent = cellValue; // Set cell content
-            }
-        });
-    });
+                // Iterate over each row of data
+                rows.forEach(row => {
+                    // Create a new row for each set of data
+                    const newRow = tableBody.insertRow();
+                    
+                    // Fetch cells from B to G (indices 1 to 6)
+                    for (let i = 0; i <= 7; i++) { // Indices 1 to 6 correspond to columns B to G
+                        const newCell = newRow.insertCell(); // Create a new cell
+                        newCell.textContent = row.c[i] ? row.c[i].v : ''; // Set cell content, handle empty cells
+                    }
+                });
+            })
 
             .catch(error => console.error('Error fetching the Google Sheet data:', error));
     </script>
