@@ -14,6 +14,7 @@
             <table id="reportTable">
             <thead>
                 <tr>
+                    <th>Date</th>
                     <th>Plant Name</th>
                     <th>Report by</th>
                     <th>Shift</th>
@@ -60,7 +61,7 @@
                     const newRow = tableBody.insertRow();
                     
                     // Fetch cells from B to G (indices 1 to 6)
-                    for (let i = 1; i <= 7; i++) { // Indices 1 to 6 correspond to columns B to G
+                    for (let i = 0; i <= 7; i++) { // Indices 1 to 6 correspond to columns B to G
                         const newCell = newRow.insertCell(); // Create a new cell
                         newCell.textContent = row.c[i] ? row.c[i].v : ''; // Set cell content, handle empty cells
                     }
