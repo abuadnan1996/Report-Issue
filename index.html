@@ -42,40 +42,37 @@
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&gid=${gid}`;
 
         // Fetch data from Google Sheets
-             fetch(url)
-    .then(response => response.text())
-    .then(data => {
-        // Parse the JSON response
-        const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
-        const rows = json.table.rows;
-
-        // Get the table body element
-        const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
-
-        // Clear any existing rows
-        tableBody.innerHTML = '';
-
-        // Iterate over each row of data
-        rows.forEach(row => {
-            // Create a new row for each set of data
-            const newRow = tableBody.insertRow();
-            
-            // Fetch cells from B to G (indices 1 to 6)
-            for (let i = 0; i <= 7; i++) { // Indices 0 to 6 correspond to columns A to G
-                const newCell = newRow.insertCell(); // Create a new cell
-
-                // If it's the first column, use the 'f' property, otherwise use the 'v' property
-                let cellValue;
-                if (i === 0) {
-                    cellValue = row.c[i] && row.c[i].f ? row.c[i].f : ''; // Use 'f' for the first column
-                } else {
-                    cellValue = row.c[i] ? row.c[i].v : ''; // Use 'v' for other columns
-                }
-
-                newCell.textContent = cellValue; // Set cell content, handle empty cells
-            }
-        });
-    });
+            fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        // Parse the JSON response
+                        const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
+                        const rows = json.table.rows;
+                
+                        // Get the table body element
+                        const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+                
+                        // Clear any existing rows
+                        tableBody.innerHTML = '';
+                
+                        // Iterate over each row of data
+                        rows.forEach(row => {
+                            // Create a new row for each set of data
+                            const newRow = tableBody.insertRow();
+                            
+                            // Iterate over each cell in the row
+                            row.c.forEach((cell, i) => {
+                                const newCell = newRow.insertCell(); // Create a new cell
+                                
+                                // If it's the first column (Timestamp), use the 'f' property for the formatted date
+                                if (i === 0) {
+                                    newCell.textContent = cell && cell.f ? cell.f : ''; // Use 'f' for formatted date
+                                } else {
+                                    newCell.textContent = cell && cell.v ? cell.v : ''; // Use 'v' for other columns
+                                }
+                            });
+                        });
+                    });
 
 
             .catch(error => console.error('Error fetching the Google Sheet data:', error));
