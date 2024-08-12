@@ -63,6 +63,10 @@
                     // Fetch cells from B to G (indices 1 to 6)
                     for (let i = 0; i <= 7; i++) { // Indices 1 to 6 correspond to columns B to G
                         const newCell = newRow.insertCell(); // Create a new cell
+                          // Check if the cell contains a date and format it
+                            if (cellValue && typeof cellValue === 'object' && cellValue.hasOwnProperty('f')) {
+                                cellValue = cellValue.f; // Use the formatted date string
+                            }
                         newCell.textContent = row.c[i] ? row.c[i].v : ''; // Set cell content, handle empty cells
                     }
                 });
