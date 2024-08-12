@@ -10,6 +10,7 @@ body {
 
 /* Main container styling */
 .container {
+    text-align: center;
     max-width: 100%;
     margin: auto;
     background: white;
@@ -19,7 +20,6 @@ body {
 }
 /* Button 1 styling */
 .button {
-  text-align: center;
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-weight: 600;
