@@ -18,7 +18,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 /* Button 1 styling */
-.btn-about {
+.button {
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
   font-weight: 600;
@@ -33,7 +33,7 @@ body {
   background: #34b7a7;
 }
 
-.btn-about:hover {
+.button:hover {
   background: #3dc8b7;
 }
 /* Header styling */
