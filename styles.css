@@ -97,9 +97,18 @@ td:last-child {
     font-weight: bold;
 }
 
-/* Status column styling */
 td:nth-last-child(1) {
-    color: red; /* Change the color for status */
+    color: red; /* Default color for the last td, for other statuses */
+}
+
+/* Green color for 'Solved' status */
+td:nth-last-child(1):contains("Solved") {
+    color: green;
+}
+
+/* Red color for 'Pending' status */
+td:nth-last-child(1):contains("Pending") {
+    color: red;
 }
 
 #footer {
