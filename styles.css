@@ -97,9 +97,9 @@ td:last-child {
     font-weight: bold;
 }
 
-td:nth-last-child(1) {
+/* td:nth-last-child(1) {
     color: red; /* Default color for the last td, for other statuses */
-}
+} */
 
 /* Green color for 'Solved' status */
 td:nth-last-child(1):contains("Solved") {
