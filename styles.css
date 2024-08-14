@@ -132,6 +132,6 @@ footer {
     clear: both;
     position: relative;
     height: 10px;
-    margin-bottom: -200px;
+/*     margin-bottom: -200px; */
     text-align: center;
 }
