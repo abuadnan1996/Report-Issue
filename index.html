@@ -80,13 +80,6 @@
                         });
                     });
                 })
-            document.querySelectorAll('td:nth-last-child(1)').forEach(function(cell) {
-                if (cell.textContent.trim() === 'Solved') {
-                    cell.style.color = 'green';
-                } else if (cell.textContent.trim() === 'Pending') {
-                    cell.style.color = 'red';
-                }
-});
                 .catch(error => console.error('Error fetching the Google Sheet data:', error));
     </script>
 </body>
