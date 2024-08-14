@@ -131,7 +131,7 @@ td:nth-last-child(1):contains("Pending") {
 footer {
     clear: both;
     position: relative;
-    height: 200px;
+    height: 10px;
     margin-bottom: -200px;
     text-align: center;
 }
