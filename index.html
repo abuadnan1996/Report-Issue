@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="container">
+        <img src="icon/spl-logo.jfif" width="100px" height="100px" >
         <h1>Plant Reports</h1>
         <h4>Instrument and Control Department</h4>
          <div class="table-container">
@@ -29,7 +30,12 @@
             </tbody>
         </table>
         </div>
-        <h6> <a href="https://forms.gle/qjHVHGrbfvmF9owG9" class="button">Submit a Report</a> </h6>
+        <!-- <h6> <a href="https://forms.gle/qjHVHGrbfvmF9owG9" class="button">Submit a Report</a> </h6> -->
+        <!-- <h6> <a href="form.html" class="button">Submit a Report</a> </h6> -->
+        <form id="index">
+            <button type="submit" class="button">Submit Report</button>
+        </form>
+        
     </div>
          <!-- ======= Footer ======= -->
    <footer id="footer">
@@ -81,6 +87,11 @@
                     });
                 })
                 .catch(error => console.error('Error fetching the Google Sheet data:', error));
+
+                document.getElementById('index').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    window.open("https://forms.gle/qjHVHGrbfvmF9owG9");
+                });
     </script>
 </body>
 </html>
