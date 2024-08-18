@@ -4,130 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Plant Report</title>
+    <link href="icon/spl-logo.png" rel="icon">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        h1, h4 {
-            text-align: center;
-            color: #080808;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #080808;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border: none;
-            width: 100%;
-        }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        .button:focus {
-            outline: none;
-        }
-
-        .form-group select, .form-group input, .form-group textarea {
-            margin-bottom: 10px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        footer .container {
-            padding-top: 10px;
-            border-top: 1px solid #ddd;
-        }
-
-        footer a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Flexbox layout for small fields */
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .form-row .form-group:nth-child(1) {
-            flex: 1.5;
-        }
-    </style>
+    
 </head>
-<body>
-    <div class="container">
-        <img src="icon/spl-logo.jfif" width="100px" height="100px">
+<body id="form">
+    <!-- <button id="home-btn" type="submit" class="btn btn-nav">Home</button> -->
+
+    <div id="form" class="container">
+        <img src="icon/spl-logo.png" width="100px" height="100px">
         <h1>Submit Plant Report</h1>
         <h4>Instrument and Control Department</h4>
         
@@ -151,6 +36,7 @@
                         <option value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
+                        <option value="Shutdown">Shutdown</option>
                     </select>
                 </div>
             </div>
@@ -165,14 +51,14 @@
             </div>
             <div class="form-group">
                 <label for="tag">Tag:</label>
-                <input type="text" id="tag" name="tag" required>
+                <input type="text" id="tag" name="tag" >
             </div>
             </div>
             <div class="form-group">
                 <label for="report">Report:</label>
-                <textarea  id="report" name="report" rows="4" required></textarea>
+                <textarea  id="report" name="report" rows="6" required></textarea>
             </div>
-            <button type="submit" class="button">Submit Report</button>
+            <button id="form" type="submit" class="button">Submit</button>
         </form>
     </div>
 
@@ -188,14 +74,139 @@
         </div>
     </footer>
     <!-- End Footer -->
+    <script type="module">
 
-    <script>
-        document.getElementById('reportForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Report submitted successfully!');
-           
-            // Add code here to handle the form submission, e.g., sending data to a server or Google Sheet.
-        });
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics.js";
+            import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+            
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+        
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyCFPbV6o-EJhOSxOKZkW8mku3VUOSQxHSc",
+            authDomain: "report-issue-spl.firebaseapp.com",
+            databaseURL: "https://report-issue-spl-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "report-issue-spl",
+            storageBucket: "report-issue-spl.appspot.com",
+            messagingSenderId: "47362093106",
+            appId: "1:47362093106:web:0e1d52120a23706a110c2b",
+            measurementId: "G-WXYFNMS9RM"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            console.log('App initialized');
+            const auth = getAuth(app);
+
+            import {getDatabase, ref,child, get, set,remove,onValue} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+            const database = getDatabase(app);
+            console.log('Database Initialized');
+            
+
+            // // Reference to your database
+            // const dbRef = ref(database);
+            const dbRef = ref(database);
+            const keyRef = ref(database,'currentKey/');
+
+            document.getElementById('reportForm').addEventListener('submit', submitForm);
+        
+       
+        function submitForm(e) {
+        e.preventDefault();
+            var paddedKey;
+            var currentKey;
+            var newValue;
+            // Get form values
+            const date = document.getElementById('date').value;
+            const shift = document.getElementById('shift').value;
+            const priority = document.getElementById('priority').value;
+            const plantName = document.getElementById('plantName').value;
+            const reportBy = document.getElementById('reportBy').value;
+            const report = document.getElementById('report').value;
+            const tag = document.getElementById('tag').value;
+
+            // Function to increment the integer value
+            function incrementCounter() {
+                get(child(dbRef, "currentKey/")).then((snapshot) => {
+                if (snapshot.exists()) {
+                let currentValue = snapshot.val();
+                
+                // Check if currentValue is a valid number string
+                if (/^\d+$/.test(currentValue)) {
+                    // Convert the current value to an integer
+                    let newValue = parseInt(currentValue, 10) + 1;
+
+                    // Convert back to string with leading zeros
+                    let newValueStr = newValue.toString().padStart(currentValue.length, '0');
+
+                    // Update the database with the new value
+                    set(ref(database,'currentKey/'),newValueStr);
+                    console.log('Counter incremented:', newValueStr);
+                } else {
+                    console.error('Current value is not a valid number string:', currentValue);
+                }
+                } else {
+                // If the value does not exist, start with 000001
+                // let initialValue = "000001";
+                // counterRef.set(initialValue);
+                console.log('Counter started at 000001');
+                }
+            }).catch((error) => {
+                console.error('Error getting counter value:', error);
+                alert('Error Occured!', error);
+            });
+            };
+
+            get(child(dbRef, "currentKey/")).then((snapshot) => {
+                currentKey = snapshot.val();
+                console.log('Current Key:');
+                console.log(currentKey);
+                if (currentKey === null) {
+                    currentKey = 1; // Start from 1 if no key exists
+                } else {
+                    newValue = parseInt(currentKey) + 1; // Increment the key
+
+                }
+                paddedKey = String(newValue).padStart(6, '0');
+                console.log('Padded Key:');
+                console.log(paddedKey);
+                // Save form data with the padded key
+                saveReport(paddedKey, date, shift, priority, plantName, reportBy,report,tag);
+                alert('Report submitted successfully!');
+                }
+                ).catch((error) => {
+                console.error('Error getting counter value:', error);
+                alert('Error Submitting Report',error)
+                });
+                
+            
+            // Call the increment function
+            incrementCounter();
+
+        function saveReport(key, date, shift, priority, plantName, reportBy,report,tag) {
+            set(ref(database,'report/'+key), {
+                date: date,
+                shift: shift,
+                priority: priority,
+                plantName: plantName,
+                reportBy: reportBy,
+                report : report,
+                tag : tag,
+                status : 'Pending'
+            }
+            ).catch((error) => {
+                console.error('Error getting counter value:', error);
+                alert('Error Submitting Report',error);
+            });
+            // Clear the form
+            document.getElementById('reportForm').reset();
+        }
+    };
     </script>
 </body>
 </html>

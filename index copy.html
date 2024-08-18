@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Report</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="icon/spl-logo.jfif" rel="icon">
+    
+</head>
+<body>
+    <div class="container">
+        <img src="icon/spl-logo.jfif" width="100px" height="100px" >
+        <h1>Plant Reports</h1>
+        <h4>Instrument and Control Department</h4>
+         <div class="table-container">
+            <table id="reportTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Plant Name</th>
+                    <th>Report by</th>
+                    <th>Shift</th>
+                    <th>Priority</th>
+                    <th>Tag</th>
+                    <th>Report</th>
+                    <th>Status</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <!-- Specific data will be populated here -->
+            </tbody>
+        </table>
+        </div>
+        <!-- <h6> <a href="https://forms.gle/qjHVHGrbfvmF9owG9" class="button">Submit a Report</a> </h6> -->
+        <!-- <h6> <a href="form.html" class="button">Submit a Report</a> </h6> -->
+        <form id="index">
+            <button type="submit" class="button">Submit Report</button>
+        </form>
+        
+    </div>
+         <!-- ======= Footer ======= -->
+   <!-- ======= Footer ======= -->
+   <footer id="footer">
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Abu Adnan</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Contact <a href="mailto:abuadnan1996@gmail.com">abuadnan1996@gmail.com</a>
+        </div>
+    </div>
+</footer>
+<!-- End Footer -->
+    <script>
+        // Replace 'YOUR_SHEET_ID' with your actual Google Sheet ID
+        const sheetID = '1uS2vd1GhfHRHqBGE8yb9-GgkBO2mimPuYV3gYOQ2LK0';  // E.g., '1A2B3C4D5E6F7G8H9I0J'
+        const gid = '0'; // Change this if your data is on another sheet (find gid in URL)
+        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&gid=${gid}`;
+
+        // Fetch data from Google Sheets
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    // Parse the JSON response
+                    const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
+                    const rows = json.table.rows;
+            
+                    // Get the table body element
+                    const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+            
+                    // Clear any existing rows
+                    tableBody.innerHTML = '';
+            
+                    // Iterate over each row of data
+                    rows.forEach(row => {
+                        // Create a new row for each set of data
+                        const newRow = tableBody.insertRow();
+                        
+                        // Iterate over each cell in the row
+                        row.c.forEach((cell, i) => {
+                            const newCell = newRow.insertCell(); // Create a new cell
+                            
+                            // If it's the first column (Timestamp), use the 'f' property for the formatted date
+                            if (i === 0) {
+                                newCell.textContent = cell && cell.f ? cell.f : ''; // Use 'f' for formatted date
+                            } else {
+                                newCell.textContent = cell && cell.v ? cell.v : ''; // Use 'v' for other columns
+                            }
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching the Google Sheet data:', error));
+
+                document.getElementById('index').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                });
+    </script>
+</body>
+</html>

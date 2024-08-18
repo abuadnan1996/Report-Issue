@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Report</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="icon/spl-logo.jfif" rel="icon">
+    <link href="icon/spl-logo.png" rel="icon">
     
 </head>
 <body>
     <div class="container">
-        <img src="icon/spl-logo.jfif" width="100px" height="100px" >
+        <img src="icon/spl-logo.png" width="100px" height="100px" >
         <h1>Plant Reports</h1>
         <h4>Instrument and Control Department</h4>
          <div class="table-container">
-            <table id="reportTable">
+            <table id="reportTable" aria-sort="descending">
             <thead>
                 <tr>
+                    <th>Report No.</th>
                     <th>Date</th>
                     <th>Plant Name</th>
                     <th>Report by</th>
@@ -35,65 +36,99 @@
         <!-- <h6> <a href="https://forms.gle/qjHVHGrbfvmF9owG9" class="button">Submit a Report</a> </h6> -->
         <!-- <h6> <a href="form.html" class="button">Submit a Report</a> </h6> -->
         <form id="index">
-            <button type="submit" class="button">Submit Report</button>
+            <button type="submit" class="button">Create Report</button>
         </form>
         
     </div>
          <!-- ======= Footer ======= -->
+   <!-- ======= Footer ======= -->
    <footer id="footer">
     <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Abu Adnan</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Contact <a href="mailto:abuadnan1996@gmail.com">abuadnan1996@gmail.com</a>
-      </div>
+        <div class="copyright">
+            &copy; Copyright <strong><span>Abu Adnan</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Contact <a href="mailto:abuadnan1996@gmail.com">abuadnan1996@gmail.com</a>
+        </div>
     </div>
-  </footer><!-- End  Footer -->
-    <script>
-        // Replace 'YOUR_SHEET_ID' with your actual Google Sheet ID
-        const sheetID = '1uS2vd1GhfHRHqBGE8yb9-GgkBO2mimPuYV3gYOQ2LK0';  // E.g., '1A2B3C4D5E6F7G8H9I0J'
-        const gid = '0'; // Change this if your data is on another sheet (find gid in URL)
-        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&gid=${gid}`;
+</footer>
+<!-- End Footer -->
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics.js";
+            import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
-        // Fetch data from Google Sheets
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    // Parse the JSON response
-                    const json = JSON.parse(data.substr(47).slice(0, -2)); // Clean up the response string
-                    const rows = json.table.rows;
-            
-                    // Get the table body element
-                    const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
-            
-                    // Clear any existing rows
-                    tableBody.innerHTML = '';
-            
-                    // Iterate over each row of data
-                    rows.forEach(row => {
-                        // Create a new row for each set of data
-                        const newRow = tableBody.insertRow();
-                        
-                        // Iterate over each cell in the row
-                        row.c.forEach((cell, i) => {
-                            const newCell = newRow.insertCell(); // Create a new cell
-                            
-                            // If it's the first column (Timestamp), use the 'f' property for the formatted date
-                            if (i === 0) {
-                                newCell.textContent = cell && cell.f ? cell.f : ''; // Use 'f' for formatted date
-                            } else {
-                                newCell.textContent = cell && cell.v ? cell.v : ''; // Use 'v' for other columns
-                            }
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching the Google Sheet data:', error));
+            const firebaseConfig = {
+            apiKey: "AIzaSyCFPbV6o-EJhOSxOKZkW8mku3VUOSQxHSc",
+            authDomain: "report-issue-spl.firebaseapp.com",
+            databaseURL: "https://report-issue-spl-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "report-issue-spl",
+            storageBucket: "report-issue-spl.appspot.com",
+            messagingSenderId: "47362093106",
+            appId: "1:47362093106:web:0e1d52120a23706a110c2b",
+            measurementId: "G-WXYFNMS9RM"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            console.log('App initialized');
+            const auth = getAuth(app);
 
-                document.getElementById('index').addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    window.open("https://forms.gle/qjHVHGrbfvmF9owG9");
-                });
+            import {getDatabase, ref,child, get, set,remove,onValue} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+            const database = getDatabase(app);
+            console.log('Database Initialized');
+            
+
+            // // Reference to your database
+            // const dbRef = ref(database);
+            const dbRef = ref(database);
+
+            const tableBody = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+
+            // Function to populate the table
+            get(child(dbRef,'report/')).then((snapshot) => {
+                let response = snapshot.val();
+                // Clear existing table rows
+                // tableBody.innerHTML = '';
+                // console.log('Child Val: ',response);
+                for (const key in response)
+            {
+                const item  = response[key];
+                // console.log('Data:::', item);
+
+                // Create a new row
+                    const row = tableBody.insertRow();
+
+                    const cellReportNo = row.insertCell(0);
+                    const cellDate = row.insertCell(1);
+                    const cellPlantName = row.insertCell(2);
+                    const cellReportBy = row.insertCell(3);
+                    const cellShift = row.insertCell(4);
+                    const cellPriority = row.insertCell(5);
+                    const cellTag = row.insertCell(6);
+                    const cellReport = row.insertCell(7);
+                    const cellStatus = row.insertCell(8);
+
+                    cellReportNo.textContent = key;
+                    cellDate.textContent = item.date;
+                    cellPlantName.textContent = item.plantName;
+                    cellReportBy.textContent = item.reportBy;
+                    cellShift.textContent = item.shift;
+                    cellPriority.textContent = item.priority;
+                    cellTag.textContent = item.tag;
+                    cellReport.textContent = item.report;
+                    cellStatus.textContent = item.status;
+            }
+            });
+
+            document.getElementById('index').addEventListener('submit', function(event) {
+                event.preventDefault();
+                window.open('form.html',"_self");
+                // window.open()
+            });
+                
     </script>
 </body>
 </html>
